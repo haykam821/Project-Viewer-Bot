@@ -1,0 +1,26 @@
+{
+	"name": "project-viewer-bot",
+	"description": "A Telegram bot to view GitHub project boards.",
+	"version": "1.0.0",
+	"author": "haykam821",
+	"license": "MIT",
+	"keywords": [
+		"telegram",
+		"bot",
+		"github",
+		"project",
+		"kanban"
+	],
+	"main": "./src/index.js",
+	"homepage": "https://github.com/haykam821/Project-Viewer-Bot#readme",
+	"bugs": {
+		"url": "https://github.com/haykam821/Project-Viewer-Bot/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/haykam821/Project-Viewer-Bot.git"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	}
+}

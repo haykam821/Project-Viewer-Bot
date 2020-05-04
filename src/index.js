@@ -19,7 +19,7 @@ const getProjects = async (context, next) => {
 
 	context.state.projects = projects.data;
 	next();
-}
+};
 
 const getProjectByNumber = (context, next) => {
 	const number = context.state.command.splitArgs[0] || 1;
@@ -36,24 +36,29 @@ const getProjectByNumber = (context, next) => {
 	next();
 };
 
+/**
+ * Turns text and a URL into a link.
+ * @param {string} text The text of the link.
+ * @param {string} url The URL of the link.
+ * @returns {string} The link.
+ */
 function link(text, url) {
 	return `[${escape(text)}](${url})`;
 }
 
-client.command("projects", getProjects, async context => {
+client.command("projects", getProjects, context => {
 	context.replyWithMarkdown(context.state.projects.map(project => {
 		const descriptionText = project.body ? " (" + escape(project.body) + ")" : "";
-		return "• " + link(project.name, project.html_url) + descriptionText + ": `#" + project.number + "`";;
+		return "• " + link(project.name, project.html_url) + descriptionText + ": `#" + project.number + "`";
 	}).join("\n"));
 });
 
 client.command("columns", getProjects, getProjectByNumber, async context => {
 	const columns = await octokit.projects.listColumns({
 		project_id: context.state.project.id,
-	})
+	});
 
 	context.replyWithMarkdown(columns.data.map(column => {
-		const linkedNameText = `[${escape(column.name)}](${column.url})`;
 		return "• " + link(column.name, column.url) + ": `" + column.id + "`";
 	}).join("\n"));
 });

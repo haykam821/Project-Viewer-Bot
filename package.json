@@ -40,6 +40,9 @@
 		"eslint-plugin-unicorn": "^10.0.0"
 	},
 	"eslintConfig": {
-		"extends": "eslint-config-haykam"
+		"extends": "eslint-config-haykam",
+		"rules": {
+			"camelcase": "off"
+		}
 	}
 }

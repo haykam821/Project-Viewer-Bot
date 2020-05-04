@@ -21,6 +21,21 @@ const getProjects = async (context, next) => {
 	next();
 }
 
+const getProjectByNumber = (context, next) => {
+	const number = context.state.command.splitArgs[0] || 1;
+	if (number <= 0) {
+		return context.reply("Project numbers must be positive.");
+	}
+
+	const project = context.state.projects[number - 1];
+	if (!project) {
+		return context.reply("There is no project with that number.");
+	}
+
+	context.state.project = project;
+	next();
+};
+
 function link(text, url) {
 	return `[${escape(text)}](${url})`;
 }
@@ -29,6 +44,17 @@ client.command("projects", getProjects, async context => {
 	context.replyWithMarkdown(context.state.projects.map(project => {
 		const descriptionText = project.body ? " (" + escape(project.body) + ")" : "";
 		return "• " + link(project.name, project.html_url) + descriptionText + ": `#" + project.number + "`";;
+	}).join("\n"));
+});
+
+client.command("columns", getProjects, getProjectByNumber, async context => {
+	const columns = await octokit.projects.listColumns({
+		project_id: context.state.project.id,
+	})
+
+	context.replyWithMarkdown(columns.data.map(column => {
+		const linkedNameText = `[${escape(column.name)}](${column.url})`;
+		return "• " + link(column.name, column.url) + ": `" + column.id + "`";
 	}).join("\n"));
 });
 

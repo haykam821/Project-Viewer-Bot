@@ -22,5 +22,11 @@
 	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"dependencies": {
+		"@octokit/rest": "^17.6.0",
+		"markdown-escape": "^1.0.2",
+		"telegraf": "^3.38.0",
+		"telegraf-command-parts": "^1.0.3"
 	}
 }

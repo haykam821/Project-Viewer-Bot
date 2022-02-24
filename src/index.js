@@ -55,6 +55,7 @@ client.command("projects", getProjects, context => {
 
 client.command("columns", getProjects, getProjectByNumber, async context => {
 	const columns = await octokit.projects.listColumns({
+		/* eslint-disable-next-line camelcase */
 		project_id: context.state.project.id,
 	});
 
